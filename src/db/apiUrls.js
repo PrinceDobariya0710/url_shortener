@@ -1,0 +1,77 @@
+
+import supabase, { supabaseUrl } from "./supabase";
+
+export async function getUrls(user_id) {
+    const { data, error } = await supabase.from("urls").select("*").eq("user_id", user_id);
+
+    // const {data, error} = await supabase.auth.getUser();
+
+    if (error) {
+        console.log(error.message);
+        throw new Error("Unable to fetch urls data");
+    }
+    return data;
+}
+export async function createUrl({ title, longUrl, customUrl, user_id }, qr_code) {
+    const short_url = Math.random().toString(36).substring(2, 8);
+    const fileName = `qr-${short_url}`;
+
+    const { error: storageError } = await supabase.storage
+        .from("qrs")
+        .upload(fileName, qr_code);
+
+    if (storageError) throw new Error(storageError.message);
+
+    const qr = `${supabaseUrl}/storage/v1/object/public/qrs/${fileName}`;
+    const { data, error } = await supabase.from("urls").insert({
+        title,
+        original_url: longUrl,
+        custom_url: customUrl || null,
+        short_url,
+        user_id,
+        qr
+    }).select();
+
+    if (error) {
+        console.log(error.message);
+        throw new Error("Error creating short url");
+    }
+    return data;
+}
+
+export async function deleteUrl(id) {
+    const { data, error } = await supabase.from("urls").delete().eq("id", id);
+
+    // const {data, error} = await supabase.auth.getUser();
+
+    if (error) {
+        console.log(error.message);
+        throw new Error("Unable to delete url");
+    }
+    return data;
+}
+
+export async function getLongUrl(id) {
+    let { data: shortLinkData, error: shortLinkError } = await supabase
+        .from("urls")
+        .select("id, original_url")
+        .or(`short_url.eq.${id},custom_url.eq.${id}`)
+        .single();
+
+    if (shortLinkError && shortLinkError.code !== "PGRST116") {
+        console.error("Error fetching short link:", shortLinkError);
+        return;
+    }
+
+    return shortLinkData;
+}
+
+export async function getUrl({ id, user_id }) {
+    const { data, error } = await supabase.from("urls").select("*").eq("id", id).eq("user_id", user_id).single();
+
+    if (error) {
+        console.log(error.message);
+        throw new Error("Unable to fetch url data");
+    }
+    return data;
+}
