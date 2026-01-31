@@ -181,8 +181,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 Made with ❤️ by Prince Kumar
 
-- GitHub: [your-github-username](https://github.com/PrinceDobariya0710)
-- LinkedIn: [your-linkedin](https://www.linkedin.com/in/princekumar-dobariya-198637154/)
+- GitHub: [PrinceDobariya0710](https://github.com/PrinceDobariya0710)
+- LinkedIn: [princekumar-dobariya](https://www.linkedin.com/in/princekumar-dobariya-198637154/)
 
 ---
 
