@@ -6,7 +6,7 @@ import useFetch from '@/hooks/useFetch'
 import { BeatLoader } from 'react-spinners'
 import { deleteUrl } from '@/db/apiUrls'
 
-const DOMAIN = import.meta.env.VITE_DOMAIN || 'trimrr.in';
+const DOMAIN = import.meta.env.VITE_DOMAIN || window.location.hostname;
 
 const LinkCard = ({ url, fetchUrls }) => {
     const downloadImage = () => {

@@ -20,7 +20,7 @@ import { createUrl } from '@/db/apiUrls'
 import useFetch from '@/hooks/useFetch'
 import { BeatLoader } from 'react-spinners'
 
-const DOMAIN = import.meta.env.VITE_DOMAIN || 'trimrr.in';
+const DOMAIN = import.meta.env.VITE_DOMAIN || window.location.hostname;
 
 const CreateLink = () => {
     const { user } = UrlState();

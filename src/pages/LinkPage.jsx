@@ -21,7 +21,7 @@ import { getClicksForUrl } from '@/db/apiClicks';
 import LocationStats from '@/components/LocationStats';
 import DeviceStats from '@/components/DeviceStats';
 
-const DOMAIN = import.meta.env.VITE_DOMAIN || 'trimrr.in';
+const DOMAIN = import.meta.env.VITE_DOMAIN || window.location.hostname;
 
 const LinkPage = () => {
     const { id } = useParams();
